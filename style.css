@@ -1,12 +1,16 @@
-#gameCanvas{
-    border: 5px solid black;
-    position: absolute;
-    top:50%;
-    left:50%;
-    translate: -50% -50%;
-    background: url('images/background.png');
+#gameCanvas {
+  border: 5px solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  background: url("images/background.png");
 }
 
-#beetlemorph{
-    display: none;
+#beetlemorph,
+#player,
+#player_jets,
+#rhinomorph,
+#boss {
+  display: none;
 }

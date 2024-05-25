@@ -57,6 +57,7 @@ export class Player {
 		this.maxLives = 10;
 		this.energy = 50;
 		this.maxEnergy = 100;
+		this.energyRecovery = 0.1;
 		this.coolDown = false;
 		this.smallLaser = new SmallLaser(this.game);
 		this.bigLaser = new BigLaser(this.game);
@@ -64,7 +65,7 @@ export class Player {
 
 	updatePosition() {
 		// Update player position and energy here
-		if (this.energy < this.maxEnergy) this.energy += 0.05;
+		if (this.energy < this.maxEnergy) this.energy += this.energyRecovery;
 		if (this.energy < 1) this.coolDown = true;
 		else if (this.energy > this.maxEnergy * 0.2) this.coolDown = false;
 

@@ -6,6 +6,7 @@ import { Projectile } from './Projectile.js';
 export class Game {
 	constructor(canvas) {
 		this.canvas = canvas;
+		this.isPaused = false;
 		this.width = this.canvas.width;
 		this.height = this.canvas.height;
 		this.keys = [];
@@ -61,7 +62,7 @@ export class Game {
 			.then(() => {
 				this.imagesLoaded = true;
 				this.player = new Player(this);
-				console.log('Player initialized:', this.player); // Debugging line
+
 				this.restart();
 			})
 			.catch((err) => {

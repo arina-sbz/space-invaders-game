@@ -147,44 +147,106 @@ export class GameView {
 	}
 
 	drawStatusText() {
+		let isMobile = this.context.canvas.isMobile;
+
+		// Adjust radius and font size based on isMobile
+		let fontSize = isMobile ? '20px' : '30px';
+
 		this.context.save();
 		this.context.shadowOffsetX = 2;
 		this.context.shadowOffsetY = 2;
-		this.context.shadowColor = 'black';
-		this.context.fillText('Score: ' + this.game.score, 20, 40);
-		this.context.fillText('Wave: ' + this.game.waveCount, 20, 80);
-		for (let i = 0; i < this.game.player.maxLives; i++) {
-			this.context.strokeRect(20 + 20 * i, 100, 10, 15);
-		}
-		for (let i = 0; i < this.game.player.lives; i++) {
-			this.context.fillRect(20 + 20 * i, 100, 10, 15);
-		}
+		this.context.fillStyle = 'white';
+		this.context.font = `${fontSize} impact`;
 
-		// Draw energy
+		// Adjust text positions based on font size
+		this.context.fillText(
+			'Score: ' + this.game.score + ' | ' + 'Wave: ' + this.game.waveCount,
+			0,
+			50
+		);
+
+		// Draw lives as smaller hearts
 		this.context.save();
-		this.game.player.coolDown
-			? (this.context.fillStyle = 'red')
-			: (this.context.fillStyle = 'gold');
-		for (let i = 0; i < this.game.player.energy; i++) {
-			this.context.fillRect(20 + 2 * i, 130, 2, 15);
+		let heartSize = isMobile ? 15 : 20;
+		for (let i = 0; i < this.game.player.lives; i++) {
+			this.drawHeart(10 + i * (heartSize + 5), 70, heartSize, 'red');
 		}
+		this.context.restore();
+
+		// Draw energy bar
+		this.context.save();
+		let energy = this.game.player.energy;
+		let maxEnergy = 100;
+		let barWidth = this.game.width / 3; // Width of the energy bar
+		let barHeight = 10; // Height of the energy bar
+		let x = 0; // X position of the bar
+		let y = 0; // Y position of the bar, adjusted to fit below hearts
+
+		// Draw the background of the bar
+		this.context.fillStyle = 'grey';
+		this.context.fillRect(x, y, barWidth, barHeight);
+
+		// Draw the energy level
+		let energyWidth = (energy / maxEnergy) * barWidth;
+		this.context.fillStyle = this.game.player.coolDown ? 'green' : 'gold';
+		this.context.fillRect(x, y, energyWidth, barHeight);
+
+		// Draw the border of the bar
+		this.context.strokeStyle = 'black';
+		this.context.strokeRect(x, y, barWidth, barHeight);
 		this.context.restore();
 
 		if (this.game.gameOver) {
 			this.context.textAlign = 'center';
-			this.context.font = '80px Impact';
+			this.context.font = isMobile ? '40px Impact' : '80px Impact';
 			this.context.fillText(
 				'Oops Game Over',
 				this.game.width * 0.5,
 				this.game.height * 0.5
 			);
-			this.context.font = '20px Impact';
+			this.context.font = isMobile ? '10px Impact' : '20px Impact';
 			this.context.fillText(
 				'Press R to restart',
 				this.game.width * 0.5,
 				this.game.height * 0.5 + 30
 			);
 		}
+		this.context.restore();
+	}
+
+	drawHeart(x, y, size, color) {
+		this.context.save();
+		this.context.beginPath();
+		let topCurveHeight = size * 0.3; // Make the heart less tall
+		this.context.moveTo(x, y + topCurveHeight);
+		this.context.bezierCurveTo(
+			x,
+			y,
+			x - size / 2,
+			y,
+			x - size / 2,
+			y + topCurveHeight
+		);
+		this.context.bezierCurveTo(
+			x - size / 2,
+			y + size / 1.5,
+			x,
+			y + size / 1.5,
+			x,
+			y + size
+		);
+		this.context.bezierCurveTo(
+			x,
+			y + size / 1.5,
+			x + size / 2,
+			y + size / 1.5,
+			x + size / 2,
+			y + topCurveHeight
+		);
+		this.context.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+		this.context.closePath();
+		this.context.fillStyle = color;
+		this.context.fill();
 		this.context.restore();
 	}
 }

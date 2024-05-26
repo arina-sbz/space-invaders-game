@@ -7,8 +7,8 @@ export class Player {
 		this.height = 120;
 		this.x = this.game.width / 2 - this.width / 2;
 		this.y = this.game.height - this.height;
-		this.speed = 5;
-		this.lives = 3;
+		this.speed = 10;
+		this.lives = 1;
 		this.maxLives = 10;
 		this.energy = 50;
 		this.maxEnergy = 100;
@@ -18,7 +18,7 @@ export class Player {
 	}
 
 	updatePosition() {
-		if (this.energy < this.maxEnergy) this.energy += 0.05;
+		if (this.energy < this.maxEnergy) this.energy += 0.025;
 		if (this.energy < 1) this.coolDown = true;
 		else if (this.energy > this.maxEnergy * 0.2) this.coolDown = false;
 

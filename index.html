@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Space Invaders Game</title>
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		<title>Game</title>
 	</head>
 	<body>
-		<canvas id="gameCanvas"></canvas>
+		<!-- Start Page -->
+		<div id="start-page" class="start-page">
+			<h1>Welcome to Space Invaders</h1>
+			<button id="start-game-button" class="btn">Start Game</button>
+			<button id="change-language-button" class="btn">Change Language</button>
+		</div>
+
+		<!-- Game Content -->
+		<div id="game-content" style="display: none">
+			<canvas id="gameCanvas"></canvas>
+			<audio id="background-music" src="./sounds/background.wav" loop></audio>
+		</div>
 
 		<script type="module" src="index.js"></script>
 	</body>

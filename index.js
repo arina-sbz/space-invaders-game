@@ -5,7 +5,24 @@ import { GameController } from './controller.js';
 window.addEventListener('load', function () {
 	const canvas = document.getElementById('gameCanvas');
 	const ctx = canvas.getContext('2d');
+	let startPage = true;
 	let isPaused = false;
+
+	let backgroundMusic = document.getElementById('background-music');
+	function playMusic() {
+		backgroundMusic
+			.play()
+			.then(() => {
+				console.log('Background music started');
+			})
+			.catch((error) => {
+				console.error('Failed to play background music:', error);
+			});
+		document.removeEventListener('click', playMusic);
+	}
+
+	// Add event listener for user interaction
+	document.addEventListener('click', playMusic);
 
 	function setCanvasSize() {
 		if (window.innerWidth > 1200) {
@@ -22,6 +39,20 @@ window.addEventListener('load', function () {
 			canvas.height = window.innerHeight;
 		}
 	}
+
+	document
+		.getElementById('start-game-button')
+		.addEventListener('click', function () {
+			document.getElementById('start-page').style.display = 'none';
+			document.getElementById('game-content').style.display = 'block';
+			playMusic();
+		});
+
+	document
+		.getElementById('change-language-button')
+		.addEventListener('click', function () {
+			alert('Change language functionality not implemented yet.');
+		});
 
 	// Set the initial canvas size
 	setCanvasSize();

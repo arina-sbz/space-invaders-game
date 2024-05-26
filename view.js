@@ -165,6 +165,13 @@ export class GameView {
 			50
 		);
 
+		//Tutorial example #1
+		// this.context.fillText(
+		// 	'tutorial',
+		// 	this.game.width / 2,
+		// 	this.game.height / 2
+		// );
+
 		// Draw lives as smaller hearts
 		this.context.save();
 		let heartSize = isMobile ? 15 : 20;

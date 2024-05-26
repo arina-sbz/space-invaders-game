@@ -17,3 +17,44 @@
 #boss {
 	display: none;
 }
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: Arial, sans-serif;
+	background: #000;
+	color: #fff;
+}
+
+.start-page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background: linear-gradient(to bottom, #1a1a1a, #333);
+	text-align: center;
+}
+
+.start-page h1 {
+	font-size: 3em;
+	margin-bottom: 20px;
+}
+
+.btn {
+	padding: 10px 20px;
+	margin: 10px;
+	font-size: 1.2em;
+	color: #fff;
+	background-color: #007bff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+	background-color: #0056b3;
+}

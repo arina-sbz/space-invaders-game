@@ -1,5 +1,5 @@
 {
-  "name": "space-invaders-game",
+  "name": "def-not-space-invaders-game",
   "version": "1.0.0",
   "description": "Simple Space Invaders game using Vanilla Js :)",
   "main": "controller.js",

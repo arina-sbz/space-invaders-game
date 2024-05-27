@@ -38,11 +38,43 @@ export class GameView {
 		);
 	}
 
+	
+
 	renderLasers() {
 		const smallLaser = this.game.player.smallLaser;
 		const bigLaser = this.game.player.bigLaser;
 
+		let lazorSound;
+		let lazorSoundActive = false;
+
+		// Function to play the lazor sound
+		function playLazorSound() {
+			if (!lazorSoundActive) { 
+				lazorSound = document.getElementById("lazor-sound"); 
+				lazorSound.loop = false; 
+				lazorSound.play();
+				lazorSoundActive = true;
+			}
+		}
+	  
+		// Function to stop the lazor sound
+		function stopLazorSound() {
+			if (lazorSoundActive) {
+				lazorSound.pause();
+				lazorSound.currentTime = 0; 
+				lazorSoundActive = false;
+			}
+		}
+
 		if (this.game.player.energy > 1 && !this.game.player.coolDown) {
+			let laserActive = this.game.keys.indexOf('2') > -1 || this.game.keys.indexOf('3') > -1; 
+
+			if (laserActive) {
+				playLazorSound();
+			} else {
+				stopLazorSound();
+			}
+
 			// Update and render small laser if '2' key is pressed
 			if (this.game.keys.indexOf('2') > -1 && smallLaser) {
 				smallLaser.updatePosition();
@@ -82,6 +114,8 @@ export class GameView {
 					bigLaser.height
 				);
 			}
+
+			
 		}
 	}
 

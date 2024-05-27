@@ -6,6 +6,7 @@ export class Projectile {
 		this.y = 0;
 		this.speed = 20;
 		this.free = true;
+		this.soundPlaying = false; // Flag to track sound status
 	}
 
 	update() {
@@ -19,6 +20,14 @@ export class Projectile {
 		this.x = x - this.width * 0.5;
 		this.y = y;
 		this.free = false;
+
+        // Play pew sound only if it's not already playing
+        const pewSound = document.getElementById("pew-sound");
+        if (pewSound.paused) { // Check if the sound is paused
+            pewSound.currentTime = 0; // Reset playback position
+            pewSound.loop = false; // Disable looping 
+            pewSound.play();
+        }		
 	}
 
 	reset() {

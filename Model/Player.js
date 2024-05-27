@@ -22,9 +22,9 @@ export class Player {
 		if (this.energy < 1) this.coolDown = true;
 		else if (this.energy > this.maxEnergy * 0.2) this.coolDown = false;
 
-		if (this.game.keys.indexOf('ArrowLeft') > -1) {
+		if (this.game.keys.indexOf('ArrowLeft') > -1 || this.game.keys.indexOf('a') > -1) {  // Check for 'a' (lowercase)
 			this.x -= this.speed;
-		} else if (this.game.keys.indexOf('ArrowRight') > -1) {
+		} else if (this.game.keys.indexOf('ArrowRight') > -1 || this.game.keys.indexOf('d') > -1) {  // Check for 'd' (lowercase)
 			this.x += this.speed;
 		}
 

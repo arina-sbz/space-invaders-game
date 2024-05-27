@@ -88,7 +88,6 @@ export class Player {
 	shoot() {
 		const projectile = this.game.getProjectile();
 		if (projectile) projectile.start(this.x + this.width * 0.5, this.y);
+
 	}
 }
-
-// Define other models like Enemy, Boss, Wave, etc.

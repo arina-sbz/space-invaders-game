@@ -136,6 +136,7 @@ export class GameView {
 			if (boss.lives >= 1) {
 				this.context.save();
 				this.context.textAlign = 'center';
+				this.context.font = `30px impact`;
 				this.context.fillText(
 					Math.floor(boss.lives),
 					boss.x + boss.width * 0.5,

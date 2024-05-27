@@ -9,15 +9,9 @@ window.addEventListener('load', function () {
 	let isPaused = false;
 
 	let backgroundMusic = document.getElementById('background-music');
-	function playMusic() {
+	function playMusic() {//Starts the background music with the start button
 		backgroundMusic
 			.play()
-			.then(() => {
-				console.log('Background music started');
-			})
-			.catch((error) => {
-				console.error('Failed to play background music:', error);
-			});
 		document.removeEventListener('click', playMusic);
 	}
 

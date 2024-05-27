@@ -4,6 +4,7 @@ export class Laser {
 		this.x = 0;
 		this.y = 0;
 		this.height = this.game.height - 50;
+
 	}
 
 	updatePosition() {
@@ -37,6 +38,8 @@ export class SmallLaser extends Laser {
 		super(game);
 		this.width = 4;
 		this.damage = 0.3;
+
+
 	}
 }
 

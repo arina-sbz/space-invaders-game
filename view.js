@@ -1,3 +1,6 @@
+import { translations } from './dictionary.js';
+import { language } from './index.js';
+
 export class GameView {
 	constructor(game, context) {
 		this.game = game;
@@ -203,17 +206,10 @@ export class GameView {
 
 		// Adjust text positions based on font size
 		this.context.fillText(
-			'Score: ' + this.game.score + ' | ' + 'Wave: ' + this.game.waveCount,
+			translations.score[language] + this.game.score + ' | ' + translations.wave[language] + this.game.waveCount,
 			0,
 			50
 		);
-
-		//Tutorial example #1
-		// this.context.fillText(
-		// 	'tutorial',
-		// 	this.game.width / 2,
-		// 	this.game.height / 2
-		// );
 
 		// Draw lives as smaller hearts
 		this.context.save();
@@ -250,13 +246,13 @@ export class GameView {
 			this.context.textAlign = 'center';
 			this.context.font = isMobile ? '40px Impact' : '80px Impact';
 			this.context.fillText(
-				'Oops Game Over',
+				translations.GameOver[language],
 				this.game.width * 0.5,
 				this.game.height * 0.5
 			);
 			this.context.font = isMobile ? '10px Impact' : '20px Impact';
 			this.context.fillText(
-				'Press R to restart',
+				translations.Restart[language],
 				this.game.width * 0.5,
 				this.game.height * 0.5 + 30
 			);

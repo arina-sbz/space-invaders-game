@@ -1,7 +1,8 @@
 import { Game } from './Model/Game.js';
 import { GameView } from './view.js';
 import { GameController } from './controller.js';
-import { translations } from "./dictionary.js"; 
+import { translations } from "./dictionary.js";
+export let language = "en"; // Expose the variable itself
 
 window.addEventListener('load', function () {
 	const canvas = document.getElementById('gameCanvas');
@@ -13,11 +14,8 @@ window.addEventListener('load', function () {
 	let hasMoved = false; // Flag to track if the player has moved
 	let hasfiredProjectile = false; // Flag to track if the player has fired a projectile
 
-
-		//Strings for translation
 		const welcomeMessageElement = document.getElementById("start-page").querySelector("h1");
 		const startGameButton = document.getElementById("start-game-button");
-		let language = 'en';	
 
 		// Add event listener for changing language to English
 		document.getElementById('us-flag-button').addEventListener('click', function () {
@@ -39,7 +37,6 @@ window.addEventListener('load', function () {
 			language = lang;
 			translatePage();
 		}
-	
 
 	
 		function translatePage() {
@@ -79,7 +76,7 @@ window.addEventListener('load', function () {
 	function startTutorial() {
 		console.log("startTutorial function called");  
 		tutorialActive = true;
-		tutorialText.textContent = "Press A to move left, D to move right."; 
+		tutorialText.textContent = translations.TutorialText1[language]; 
 		tutorialText.style.display = "block"; 
 		tutorialText.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
 		tutorialText.style.zIndex = 9999; 
@@ -90,13 +87,13 @@ window.addEventListener('load', function () {
 		if (!tutorialActive) return; // Tutorial not active
 
 		if (hasMoved && hasfiredProjectile) {	
-			tutorialText.textContent = "Press Q or 2 to fire your weak laser beam. There is also the strong version with E or 3. Note that both drains the energy bar at top left.";
+			tutorialText.textContent = translations.TutorialText3[language];
 		}
 		else if (hasMoved) {
-			tutorialText.textContent = "Press W or 1 fire your free projectile laser.";
+			tutorialText.textContent = translations.TutorialText2[language];
 		} 
 		else {
-			tutorialText.textContent = "Press A or Left to move left, D or Right to move right.";
+			tutorialText.textContent = translations.TutorialText1[language];
 		}
 	
 	}
@@ -183,7 +180,7 @@ window.addEventListener('load', function () {
 		ctx.font = '48px serif';
 		ctx.textAlign = 'center';
 
-		const lines = ['Game Paused', 'Press ESC to Resume', 'Enjoy your break!'];
+		const lines = translations.PauseLines[language];
 
 		lines.forEach((line, index) => {
 			ctx.fillText(line, canvas.width / 2, canvas.height / 2 - 60 + index * 60);

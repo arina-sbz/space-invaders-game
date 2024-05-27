@@ -1,6 +1,7 @@
 import { Game } from './Model/Game.js';
 import { GameView } from './view.js';
 import { GameController } from './controller.js';
+import { translations } from "./dictionary.js"; 
 
 window.addEventListener('load', function () {
 	const canvas = document.getElementById('gameCanvas');
@@ -11,6 +12,43 @@ window.addEventListener('load', function () {
 	const tutorialText = document.getElementById("tutorialText");
 	let hasMoved = false; // Flag to track if the player has moved
 	let hasfiredProjectile = false; // Flag to track if the player has fired a projectile
+
+
+		//Strings for translation
+		const welcomeMessageElement = document.getElementById("start-page").querySelector("h1");
+		const startGameButton = document.getElementById("start-game-button");
+		let language = 'en';	
+
+		// Add event listener for changing language to English
+		document.getElementById('us-flag-button').addEventListener('click', function () {
+			changeLanguage('en');
+		});
+	
+		// Add event listener for changing language to Turkish
+		document.getElementById('turkey-flag-button').addEventListener('click', function () {
+			changeLanguage('tr');
+		});
+	
+		// Add event listener for changing language to Persian
+		document.getElementById('iran-flag-button').addEventListener('click', function () {
+			changeLanguage('fa');
+		});
+	
+		// Function to change language
+		function changeLanguage(lang) {
+			language = lang;
+			translatePage();
+		}
+	
+
+	
+		function translatePage() {
+			welcomeMessageElement.textContent = translations.welcomeMessage[language];
+			startGameButton.textContent = translations.Start[language];
+	
+			// Other Translations
+		}
+
 
 	let backgroundMusic = document.getElementById('background-music');
 	function playMusic() {//Starts the background music with the start button
@@ -92,12 +130,6 @@ window.addEventListener('load', function () {
 			document.getElementById('game-content').style.display = 'block';			
 			startTutorial();
 			playMusic();
-		});
-
-	document
-		.getElementById('change-language-button')
-		.addEventListener('click', function () {
-			alert('Change language functionality not implemented yet.');
 		});
 
 	// Set the initial canvas size
@@ -183,4 +215,5 @@ window.addEventListener('load', function () {
 			ball.dy *= -1;
 		}
 	}
+	
 });

@@ -38,8 +38,6 @@ export class GameView {
 		);
 	}
 
-	
-
 	renderLasers() {
 		const smallLaser = this.game.player.smallLaser;
 		const bigLaser = this.game.player.bigLaser;
@@ -49,66 +47,83 @@ export class GameView {
 
 		// Function to play the lazor sound
 		function playLazorSound() {
-			if (!lazorSoundActive) { 
-				lazorSound = document.getElementById("lazor-sound"); 
-				lazorSound.loop = false; 
+			if (!lazorSoundActive) {
+				lazorSound = document.getElementById('lazor-sound');
+				lazorSound.loop = false;
 				lazorSound.play();
 				lazorSoundActive = true;
 			}
 		}
-	  
+
 		// Function to stop the lazor sound
 		function stopLazorSound() {
 			if (lazorSoundActive) {
 				lazorSound.pause();
-				lazorSound.currentTime = 0; 
+				lazorSound.currentTime = 0;
 				lazorSoundActive = false;
 			}
 		}
 
 		if (this.game.player.energy > 1 && !this.game.player.coolDown) {
-			let laserActive = this.game.keys.indexOf('2') > -1 || 
-			this.game.keys.indexOf('3') > -1 ||
-			this.game.keys.indexOf('q') > -1 ||
-			this.game.keys.indexOf('e') > -1;  
+			let laserActive =
+				this.game.keys.indexOf('2') > -1 ||
+				this.game.keys.indexOf('3') > -1 ||
+				this.game.keys.indexOf('q') > -1 ||
+				this.game.keys.indexOf('e') > -1;
 
-if (laserActive) {
-playLazorSound();
-} else {
-stopLazorSound();
-}
+			if (laserActive) {
+				// playLazorSound();
+			} else {
+				// stopLazorSound();
+			}
 
-// Update and render small laser if '2' or 'q' key is pressed
-if ((this.game.keys.indexOf('2') > -1 || this.game.keys.indexOf('q') > -1) && smallLaser) {
-smallLaser.updatePosition();
-smallLaser.checkCollisions(); // Check collisions
-this.context.fillStyle = 'gold';
-this.context.fillRect(smallLaser.x, smallLaser.y, smallLaser.width, smallLaser.height);
-this.context.fillStyle = 'white';
-this.context.fillRect(
-  smallLaser.x + smallLaser.width * 0.2,
-  smallLaser.y,
-  smallLaser.width * 0.6,
-  smallLaser.height
-);
-}
+			// Update and render small laser if '2' or 'q' key is pressed
+			if (
+				(this.game.keys.indexOf('2') > -1 ||
+					this.game.keys.indexOf('q') > -1) &&
+				smallLaser
+			) {
+				smallLaser.updatePosition();
+				smallLaser.checkCollisions(); // Check collisions
+				this.context.fillStyle = 'gold';
+				this.context.fillRect(
+					smallLaser.x,
+					smallLaser.y,
+					smallLaser.width,
+					smallLaser.height
+				);
+				this.context.fillStyle = 'white';
+				this.context.fillRect(
+					smallLaser.x + smallLaser.width * 0.2,
+					smallLaser.y,
+					smallLaser.width * 0.6,
+					smallLaser.height
+				);
+			}
 
-// Update and render big laser if '3' or 'e' key is pressed
-if ((this.game.keys.indexOf('3') > -1 || this.game.keys.indexOf('e') > -1) && bigLaser) {
-bigLaser.updatePosition();
-bigLaser.checkCollisions(); // Check collisions
-this.context.fillStyle = 'gold';
-this.context.fillRect(bigLaser.x, bigLaser.y, bigLaser.width, bigLaser.height);
-this.context.fillStyle = 'white';
-this.context.fillRect(
-  bigLaser.x + bigLaser.width * 0.2,
-  bigLaser.y,
-  bigLaser.width * 0.6,
-  bigLaser.height
-);
-}
-
-			
+			// Update and render big laser if '3' or 'e' key is pressed
+			if (
+				(this.game.keys.indexOf('3') > -1 ||
+					this.game.keys.indexOf('e') > -1) &&
+				bigLaser
+			) {
+				bigLaser.updatePosition();
+				bigLaser.checkCollisions(); // Check collisions
+				this.context.fillStyle = 'gold';
+				this.context.fillRect(
+					bigLaser.x,
+					bigLaser.y,
+					bigLaser.width,
+					bigLaser.height
+				);
+				this.context.fillStyle = 'white';
+				this.context.fillRect(
+					bigLaser.x + bigLaser.width * 0.2,
+					bigLaser.y,
+					bigLaser.width * 0.6,
+					bigLaser.height
+				);
+			}
 		}
 	}
 

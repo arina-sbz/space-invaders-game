@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Space Invaders Game</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-	</head>
-	<body>
-		<!-- Start Page -->
-		<div id="start-page" class="start-page">
-			<h1>Welcome to Space Invaders</h1>
-			<button id="start-game-button" class="btn">Start Game</button>
-			<button id="change-language-button" class="btn">Change Language</button>
-		</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Space Invaders Game</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div id="start-page" class="start-page">
+            <h1>Welcome to Space Invaders</h1>
+            <button id="start-game-button" class="btn">Start Game</button>
+            <button id="change-language-button" class="btn">Change Language</button>
+        </div>
 
-		<!-- Game Content -->
-		<div id="game-content" style="display: none">
-			<canvas id="gameCanvas"></canvas>
-			<audio id="background-music" src="./sounds/background.wav" loop></audio>
-			<audio id="pew-sound" src="./sounds/pew.wav" loop></audio>
-			<audio id="lazor-sound" src="./sounds/ima-firin-mah-lazer.mp3" loop></audio>
-		</div>
+        <div id="tutorialText"></div> 
 
-		<script type="module" src="index.js"></script>
-	</body>
+        <div id="game-content" style="display: none">
+            <canvas id="gameCanvas"></canvas>
+            <audio id="background-music" src="./sounds/background.wav" loop></audio>
+            <audio id="pew-sound" src="./sounds/pew.wav" loop></audio>
+            <audio id="lazor-sound" src="./sounds/ima-firin-mah-lazer.mp3" loop></audio>
+        </div>
+
+        <script type="module" src="index.js"></script>
+    </body>
 </html>

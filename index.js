@@ -7,6 +7,9 @@ window.addEventListener('load', function () {
 	const ctx = canvas.getContext('2d');
 	let startPage = true;
 	let isPaused = false;
+	let tutorialActive = false;
+	const tutorialText = document.getElementById("tutorialText");
+	let hasMoved = false; // Flag to track if the player has moved
 
 	let backgroundMusic = document.getElementById('background-music');
 	function playMusic() {//Starts the background music with the start button
@@ -33,12 +36,55 @@ window.addEventListener('load', function () {
 			canvas.height = window.innerHeight;
 		}
 	}
+	// Inside the startTutorial function
+	function startTutorial() {
+		console.log("startTutorial function called");  
+		tutorialActive = true;
+		tutorialText.textContent = "Press A to move left, D to move right."; 
+		tutorialText.style.display = "block"; 
+		tutorialText.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
+		tutorialText.style.zIndex = 9999; 
+		console.log("tutorialText styles:", getComputedStyle(tutorialText));
+	}
+	  
+	function updateTutorialText() {
+		if (!tutorialActive) return; // Tutorial not active
+	
+		if (hasMoved) {
+			tutorialText.textContent = "Press Q, W, or E to use different weapons.";
+		} else {
+			tutorialText.textContent = "Press A to move left, D to move right.";
+		}
+	}
+	
+	function endTutorial() {
+		tutorialActive = false;
+		tutorialText.style.display = "none"; 
+		tutorialText.textContent = "";
+		tutorialText.style.zIndex = -1;
+		tutorialText.style.backgroundColor = "transparent";
+	}
+
+	window.addEventListener('keydown', function (event) {
+		if (event.key === 'a') {
+			hasMoved=true;
+			updateTutorialText();
+		}
+		else if (event.key === 'd') {
+			hasMoved=true;
+			updateTutorialText();
+		}
+		else if (event.key === 'q' && hasMoved===true){
+			endTutorial();
+		}
+	});
 
 	document
 		.getElementById('start-game-button')
 		.addEventListener('click', function () {
 			document.getElementById('start-page').style.display = 'none';
-			document.getElementById('game-content').style.display = 'block';
+			document.getElementById('game-content').style.display = 'block';			
+			startTutorial();
 			playMusic();
 		});
 

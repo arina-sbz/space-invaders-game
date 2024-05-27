@@ -64,9 +64,6 @@ export class Player {
 	}
 
 	updatePosition() {
-		console.log('-------------------');
-		console.log(this.lives);
-		console.log('-------------------');
 		// Update player position and energy here
 		if (this.energy < this.maxEnergy) this.energy += this.energyRecovery;
 		if (this.energy < 1) this.coolDown = true;

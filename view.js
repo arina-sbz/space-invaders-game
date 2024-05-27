@@ -75,9 +75,9 @@ export class GameView {
 				this.game.keys.indexOf('e') > -1;
 
 			if (laserActive) {
-				// playLazorSound();
+				 playLazorSound();
 			} else {
-				// stopLazorSound();
+				 stopLazorSound();
 			}
 
 			// Update and render small laser if '2' or 'q' key is pressed

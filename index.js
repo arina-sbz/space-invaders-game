@@ -10,6 +10,7 @@ window.addEventListener('load', function () {
 	let tutorialActive = false;
 	const tutorialText = document.getElementById("tutorialText");
 	let hasMoved = false; // Flag to track if the player has moved
+	let hasfiredProjectile = false; // Flag to track if the player has fired a projectile
 
 	let backgroundMusic = document.getElementById('background-music');
 	function playMusic() {//Starts the background music with the start button
@@ -49,12 +50,17 @@ window.addEventListener('load', function () {
 	  
 	function updateTutorialText() {
 		if (!tutorialActive) return; // Tutorial not active
-	
-		if (hasMoved) {
-			tutorialText.textContent = "Press Q, W, or E to use different weapons.";
-		} else {
-			tutorialText.textContent = "Press A to move left, D to move right.";
+
+		if (hasMoved && hasfiredProjectile) {	
+			tutorialText.textContent = "Press Q or 2 to fire your weak laser beam. There is also the strong version with E or 3. Note that both drains the energy bar at top left.";
 		}
+		else if (hasMoved) {
+			tutorialText.textContent = "Press W or 1 fire your free projectile laser.";
+		} 
+		else {
+			tutorialText.textContent = "Press A or Left to move left, D or Right to move right.";
+		}
+	
 	}
 	
 	function endTutorial() {
@@ -66,15 +72,15 @@ window.addEventListener('load', function () {
 	}
 
 	window.addEventListener('keydown', function (event) {
-		if (event.key === 'a') {
+		if (event.key === 'a' || event.key === 'd' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
 			hasMoved=true;
 			updateTutorialText();
 		}
-		else if (event.key === 'd') {
-			hasMoved=true;
+		else if ((event.key === 'w' && hasMoved===true)||(event.key === '1' && hasMoved===true)) {
+			hasfiredProjectile=true;
 			updateTutorialText();
 		}
-		else if (event.key === 'q' && hasMoved===true){
+		else if ((event.key === 'q' && hasMoved===true)||(event.key === '2' && hasMoved===true) ||(event.key === 'e' && hasMoved===true)||(event.key === '3' && hasMoved===true)) {
 			endTutorial();
 		}
 	});

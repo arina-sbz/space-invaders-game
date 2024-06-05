@@ -9,13 +9,14 @@ window.addEventListener('load', function () {
 	const ctx = canvas.getContext('2d');
 	let startPage = true;
 	let isPaused = false;
+	let ispausedbytutorial = false;
 	let tutorialActive = false;
 	const tutorialText = document.getElementById("tutorialText");
-	let hasMoved = false; // Flag to track if the player has moved
-	let hasfiredProjectile = false; // Flag to track if the player has fired a projectile
+	let hasMoved = false; // Flag to track if the player has moved, for tutorial
+	let hasfiredProjectile = false; // Flag to track if the player has fired a projectile, for tutorial
 
-		const welcomeMessageElement = document.getElementById("start-page").querySelector("h1");
-		const startGameButton = document.getElementById("start-game-button");
+	const welcomeMessageElement = document.getElementById("start-page").querySelector("h1");
+	const startGameButton = document.getElementById("start-game-button");
 
 		// Add event listener for changing language to English
 		document.getElementById('us-flag-button').addEventListener('click', function () {
@@ -81,6 +82,7 @@ window.addEventListener('load', function () {
 		tutorialText.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; 
 		tutorialText.style.zIndex = 9999; 
 		console.log("tutorialText styles:", getComputedStyle(tutorialText));
+		ispausedbytutorial = true;
 	}
 	  
 	function updateTutorialText() {
@@ -88,9 +90,11 @@ window.addEventListener('load', function () {
 
 		if (hasMoved && hasfiredProjectile) {	
 			tutorialText.textContent = translations.TutorialText3[language];
+			//ispausedbytutorial = true;
 		}
 		else if (hasMoved) {
 			tutorialText.textContent = translations.TutorialText2[language];
+			//ispausedbytutorial = true;
 		} 
 		else {
 			tutorialText.textContent = translations.TutorialText1[language];
@@ -103,7 +107,8 @@ window.addEventListener('load', function () {
 		tutorialText.style.display = "none"; 
 		tutorialText.textContent = "";
 		tutorialText.style.zIndex = -1;
-		tutorialText.style.backgroundColor = "transparent";
+		tutorialText.style.backgroundColor = "transparent";		
+		ispausedbytutorial = false;
 	}
 
 	window.addEventListener('keydown', function (event) {
@@ -118,6 +123,7 @@ window.addEventListener('load', function () {
 		else if ((event.key === 'q' && hasMoved===true)||(event.key === '2' && hasMoved===true) ||(event.key === 'e' && hasMoved===true)||(event.key === '3' && hasMoved===true)) {
 			endTutorial();
 		}
+		;
 	});
 
 	document
@@ -154,10 +160,14 @@ window.addEventListener('load', function () {
 		const deltaTime = timeStamp - lastTime;
 		lastTime = timeStamp;
 
-		if (!isPaused) {
+		if (!isPaused && !ispausedbytutorial) {
 			controller.updateGame(deltaTime);
 			controller.renderGame();
-		} else {
+		}
+		else if(ispausedbytutorial){
+			//Wait for user input			
+		} 
+		else {
 			displayPauseScreen();
 			updateBall();
 		}
@@ -171,6 +181,9 @@ window.addEventListener('load', function () {
 		}
 	});
 
+	/**
+	 * Displays the pause screen on the canvas.
+	 */
 	function displayPauseScreen() {
 		ctx.save();
 		ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';

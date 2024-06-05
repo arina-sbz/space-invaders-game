@@ -11,7 +11,7 @@ export const translations = {
         fa: "شروع",
         // ... more languages
     },
-    "Game Over": {
+    "GameOver": {
         en: "Game Over",
         tr: "Oyun Bitti",
         fa: "بازی تمام شد",

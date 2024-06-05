@@ -5,8 +5,9 @@ export class Projectile {
 		this.x = 0;
 		this.y = 0;
 		this.speed = 20;
-		this.free = true;
+		this.free = true;//This is to check if the projectile is free, i.e has already did not damage anything. Used to prevent double damage by single projectile
 		this.soundPlaying = false; // Flag to track sound status
+		this.type = "player";//Player projectile type
 	}
 
 	update() {

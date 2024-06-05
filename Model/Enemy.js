@@ -8,44 +8,47 @@ export class Enemy {
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.beDeleted = false;
-		this.imageKey = imageKey; // Ensure this is properly set
+		this.imageKey = imageKey; // The key for the enemy's image
 	}
 
 	update(x, y) {
 		this.x = x + this.positionX;
 		this.y = y + this.positionY;
 
+		// Check for collision with projectiles
 		this.game.projectilesPool.forEach((projectile) => {
 			if (
 				!projectile.free &&
 				this.game.checkCollision(this, projectile) &&
 				this.lives > 0
 			) {
-				this.hit(1);
-				projectile.reset();
+				this.hit(1); // Reduce lives by 1
+				projectile.reset(); // Reset the projectile
 			}
 		});
 
 		if (this.lives < 1) {
-			if (this.game.spriteUpdate) this.frameX++;
+			if (this.game.spriteUpdate) this.frameX++; // Update the sprite frame
 			if (this.frameX > this.maxFrame) {
-				this.beDeleted = true;
-				if (!this.game.gameOver) this.game.score += this.maxLives;
+				this.beDeleted = true; // Mark the enemy for deletion
+				if (!this.game.gameOver) this.game.score += this.maxLives; // Increase the score
 			}
 		}
 
+		// Check for collision with the player
 		if (this.game.checkCollision(this, this.game.player) && this.lives > 0) {
-			this.lives = 0;
-			this.game.player.lives--;
+			this.lives = 0; // Set lives to 0
+			this.game.player.lives--; // Reduce the player's lives
 		}
 
+		// Check if the enemy is out of bounds or the player has no lives left
 		if (this.y + this.height > this.game.height || this.game.player.lives < 1) {
-			this.game.gameOver = true;
+			this.game.gameOver = true; // Set the game over flag
 		}
 	}
 
 	hit(damage) {
-		this.lives -= damage;
+		this.lives -= damage; // Reduce lives by the specified damage
 	}
 }
 
@@ -71,7 +74,7 @@ export class Rhinomorph extends Enemy {
 	}
 
 	hit(damage) {
-		this.lives -= damage;
-		this.frameX = this.maxLives - Math.floor(this.lives);
+		this.lives -= damage; // Reduce lives by the specified damage
+		this.frameX = this.maxLives - Math.floor(this.lives); // Update the sprite frame based on remaining lives
 	}
 }

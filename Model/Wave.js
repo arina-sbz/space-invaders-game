@@ -1,6 +1,13 @@
 import { Beetlemporph, Rhinomorph } from './Enemy.js';
 
+/**
+ * Represents a wave of enemies in the game.
+ */
 export class Wave {
+	/**
+	 * Creates a new instance of the Wave class.
+	 * @param {Game} game - The game object.
+	 */
 	constructor(game) {
 		this.game = game;
 		this.width = this.game.columns * this.game.enemySize;
@@ -15,6 +22,9 @@ export class Wave {
 		this.create();
 	}
 
+	/**
+	 * Updates the wave's position and enemies.
+	 */
 	update() {
 		if (this.y < 0) this.y += 5;
 		this.speedY = 0;
@@ -32,6 +42,9 @@ export class Wave {
 		if (this.enemies.length <= 0) this.markedForDeletion = true;
 	}
 
+	/**
+	 * Creates the wave of enemies.
+	 */
 	create() {
 		for (let y = 0; y < this.game.rows; y++) {
 			for (let x = 0; x < this.game.columns; x++) {

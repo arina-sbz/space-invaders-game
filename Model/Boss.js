@@ -1,3 +1,5 @@
+import { EnemyProjectile } from './EnemyProjectile.js';
+
 /**
  * Represents a Boss in the game.
  */
@@ -27,8 +29,15 @@ export class Boss {
 	/**
 	 * Updates the boss's position and checks for collisions.
 	 */
+	fireProjectile() {
+        const enemyprojectile = new EnemyProjectile(this.x, this.y, 10, 5,10 );
+        this.game.projectilesPool.push(enemyprojectile);
+		console.log('Boss fired a projectile');
+    }
+
 	update() {
 		this.speedY = 0;
+
 		if (this.game.spriteUpdate && this.lives >= 1) this.frameX = 0;
 		if (this.y < 0) this.y += 8; // Increase from 4 to 8 to double the speed
 		if (
@@ -38,15 +47,18 @@ export class Boss {
 			this.speedX *= -1;
 			this.speedY = this.height;
 		}
-		this.x += this.speedX;
+		this.x += this.speedX;//movement of the boss
 		this.y += this.speedY;
+
+		this.fireProjectile();//Fire the projectile after movement
 
 		this.game.projectilesPool.forEach((projectile) => {//Boss life updater
 			if (
 				this.game.checkCollision(this, projectile) &&
 				!projectile.free &&
-				this.lives >= 1
-			) {
+				this.lives >= 1 && projectile.type === 'player'
+			)
+			{
 				this.lives--;
 				projectile.reset();
 			}

@@ -17,7 +17,7 @@ export class Player {
 		this.bigLaser = new BigLaser(this.game);
 	}
 
-	updatePosition() {
+	updatePosition() {//Updates the player's position, and reduces health if hit by an enemy projectile and updates the player's energy
 		if (this.energy < this.maxEnergy) this.energy += 0.025;
 		if (this.energy < 1) this.coolDown = true;
 		else if (this.energy > this.maxEnergy * 0.2) this.coolDown = false;
@@ -32,14 +32,25 @@ export class Player {
 		else if (this.x > this.game.width - this.width * 0.5) {
 			this.x = this.game.width - this.width * 0.5;
 		}
+		this.game.projectilesPool.forEach((projectile) => {//Player life updater
+			if (
+				this.game.checkCollision(this,projectile) &&
+				!projectile.free &&
+				this.lives >= 1 && projectile.type === 'enemy'
+			)
+			{
+				this.lives--;
+				projectile.reset();
+			}
+		});
 	}
 
-	shoot() {
+	shoot() {//Fires a projectile
 		const projectile = this.game.getProjectile();
 		if (projectile) projectile.start(this.x + this.width * 0.5, this.y);
 	}
 
-	restart() {
+	restart() {//Resets the player's position and lives if the game is restarted
 		this.x = this.game.width / 2 - this.width / 2;
 		this.y = this.game.height - this.height;
 		this.lives = 3;

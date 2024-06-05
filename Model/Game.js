@@ -2,41 +2,41 @@ import { Player } from './Player.js';
 import { Wave } from './Wave.js';
 import { Boss } from './Boss.js';
 import { Projectile } from './Projectile.js';
+import { EnemyProjectile } from './EnemyProjectile.js';
 
-export class Game {
-	constructor(canvas) {
-		this.canvas = canvas;
-		this.isPaused = false;
-		this.width = this.canvas.width;
-		this.height = this.canvas.height;
-		this.keys = [];
-		this.images = {};
-		this.imagesLoaded = false;
-		this.loadImages();
+export class Game {//Main game model
+	constructor(canvas) {this.canvas = canvas; // The canvas element where the game is drawn
+	this.isPaused = false; // Whether the game is paused
+	this.width = this.canvas.width; // The width of the game area
+	this.height = this.canvas.height; // The height of the game area
+	this.keys = []; // Array to store the state of the keyboard keys
+	this.images = {}; // Object to store the game images
+	this.imagesLoaded = false; // Whether the game images have been loaded
+	this.loadImages(); // Call the method to load the game images
 
-		this.projectilesPool = [];
-		this.numberOfProjectiles = 15;
-		this.createProjectiles();
-		this.fired = false;
+	this.projectilesPool = []; // Pool of projectiles
+	this.numberOfProjectiles = 15; // Number of projectiles in the pool
+	this.createProjectiles(); // Call the method to create the projectiles
+	this.fired = false; // Whether a projectile has been fired
 
-		this.columns = 1;
-		this.rows = 1;
-		this.enemySize = 80;
+	this.columns = 1; // Number of enemy columns
+	this.rows = 1; // Number of enemy rows
+	this.enemySize = 80; // Size of the enemies
 
-		this.waves = [];
-		this.waveCount = 1;
+	this.waves = []; // Array to store the enemy waves
+	this.waveCount = 1; // The current wave number
 
-		this.spriteUpdate = false;
-		this.spriteTimer = 0;
-		this.spriteInterval = 120;
+	this.spriteUpdate = false; // Whether the sprite needs to be updated
+	this.spriteTimer = 0; // Timer for the sprite update
+	this.spriteInterval = 120; // Interval between sprite updates
 
-		this.score = 0;
-		this.gameOver = false;
+	this.score = 0; // The player's score
+	this.gameOver = false; // Whether the game is over
 
-		this.bossArray = [];
-		this.bossLives = 10;
+	this.bossArray = []; // Array to store the bosses
+	this.bossLives = 10; // The number of lives the boss has
 	}
-
+	// Method to load the game images
 	loadImages() {
 		const loadImage = (src) => {
 			return new Promise((resolve, reject) => {
@@ -70,14 +70,14 @@ export class Game {
 			});
 	}
 
-	createProjectiles() {
+	createProjectiles() {//Old method to create projectiles
 		for (let i = 0; i < this.numberOfProjectiles; i++) {
 			const projectile = new Projectile();
 			this.projectilesPool.push(projectile);
 		}
 	}
 
-	getProjectile() {
+	getProjectile() {//New method to get a projectile from the pool to check if it hit anything
 		for (let i = 0; i < this.projectilesPool.length; i++) {
 			if (this.projectilesPool[i].free) {
 				return this.projectilesPool[i];
@@ -85,7 +85,7 @@ export class Game {
 		}
 	}
 
-	checkCollision(rec1, rec2) {
+	checkCollision(rec1, rec2) {//New method to check for collisions
 		return (
 			rec1.x < rec2.x + rec2.width &&
 			rec1.x + rec1.width > rec2.x &&
@@ -93,8 +93,11 @@ export class Game {
 			rec1.y + rec1.height > rec2.y
 		);
 	}
+	// hitsPlayer() {//New method to check if the player was hit by a projectile
+	// 	EnemyProjectile.hitsPlayer(player);
+	// }
 
-	restart() {
+	restart() {//Restart function to reset the game
 		if (this.player) {
 			this.player.restart();
 		}
@@ -109,7 +112,7 @@ export class Game {
 		this.gameOver = false;
 	}
 
-	updateState(deltaTime) {
+	updateState(deltaTime) {//This is the function that updates the every frame
 		if (!this.imagesLoaded) return; // Ensure images are loaded before updating state
 
 		if (this.spriteTimer > this.spriteInterval) {
@@ -120,11 +123,11 @@ export class Game {
 			this.spriteTimer += deltaTime;
 		}
 
-		this.projectilesPool.forEach((projectile) => {
+		this.projectilesPool.forEach((projectile) => {//Update the projectiles
 			projectile.update();
 		});
 
-		if (this.player) {
+		if (this.player) {//ipdate the player
 			this.player.updatePosition();
 		}
 
@@ -132,9 +135,9 @@ export class Game {
 			boss.update();
 		});
 
-		this.bossArray = this.bossArray.filter((boss) => !boss.beDeleted);
+		this.bossArray = this.bossArray.filter((boss) => !boss.beDeleted);//Check the bosses to see if they are marked for deletion
 
-		this.waves.forEach((wave) => {
+		this.waves.forEach((wave) => {//Create the new wave
 			wave.update();
 			if (wave.enemies.length < 1 && !wave.nextWaveTrigger && !this.gameOver) {
 				this.newWave();
@@ -143,7 +146,7 @@ export class Game {
 		});
 	}
 
-	newWave() {
+	newWave() {//Creator for the new wave
 		this.waveCount++;
 		if (this.player.lives < this.player.maxLives) this.player.lives++;
 		if (this.waveCount % 5 === 0) {

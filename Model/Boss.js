@@ -8,7 +8,9 @@ export class Boss {
 	 * Creates a new instance of the Boss class.
 	 * @param {object} game - The game object.
 	 * @param {number} bossLives - The number of lives the boss has.
+	 * 
 	 */
+	//@param {number} projectilelimitgame - The number of projectiles the boss can fire before it stops firing.
 	constructor(game, bossLives) {
 		this.game = game;
 		this.width = 200;
@@ -32,7 +34,7 @@ export class Boss {
 	 * Updates the boss's position and checks for collisions.
 	 */
 	fireProjectile() {
-        const enemyprojectile = new EnemyProjectile(this.x, this.y, 10, 2,5 );
+        const enemyprojectile = new EnemyProjectile(this.x-10, this.y, 15, 5,10 );
         this.game.projectilesPool.push(enemyprojectile);
 		console.log('Boss fired a projectile');
 		this.canfire = false;
@@ -53,26 +55,16 @@ export class Boss {
 		this.x += this.speedX;//movement of the boss
 		this.y += this.speedY;
 
-		// if(this.canfire){
-		// 	this.fireProjectile();//Fire the projectile after movement		
-		// 	this.canfire = false;
-		// }
-		// if(!this.canfire){
-		// 		this.game.projectilesPool.forEach((projectile) => {
-		// 			if (
-		// 				projectile.type === 'enemy' && !projectile.iscounted
-		// 			)
-		// 			{
-		// 				projectile.iscounted = true;
-		// 				projectilecounter++;
-		// 			}
-		// 		});
-		// 	}
-
-		// if(this.projectilecounter<1){
-		// 	this.canfire = true;
-		// }
-
+		if(this.canfire){
+			this.fireProjectile();//Fire the projectile after movement		
+		}		
+		if(!this.canfire){
+			this.projectilecounter++;
+			if(this.projectilecounter > 75){
+				this.canfire = true;
+				this.projectilecounter = 0;
+			}
+		}
 		this.game.projectilesPool.forEach((projectile) => {//Boss life updater
 			if (
 				this.game.checkCollision(this, projectile) &&
@@ -90,18 +82,18 @@ export class Boss {
 			this.lives = 0;
 		}
 
-		// if(this.lives <1){
-		// 	this.game.projectilesPool.forEach((projectile) => {
-		// 		if (
-		// 			projectile.type === 'enemy'					
-		// 		)
-		// 		{
-		// 			projectile.free=true;
-		// 			projectile.reset();
-		// 		}
-		// 	});
+		if(this.lives <1){
+			this.game.projectilesPool.forEach((projectile) => {
+				if (
+					projectile.type === 'enemy'					
+				)
+				{
+					projectile.free=true;
+					projectile.reset();
+				}
+			});
 			
-		// }
+		}
 
 		if (this.lives < 1 && this.game.spriteUpdate) {//Check if the boss is dead or at the end every frame
 			this.frameX++;

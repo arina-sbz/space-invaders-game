@@ -126,6 +126,9 @@ export class Game {//Main game model
 
 		this.projectilesPool.forEach((projectile) => {//Update the projectiles
 			projectile.update();
+			if (projectile.type==='enemy' && projectile.y > this.height) {
+				projectile.free = true;
+			}
 		});
 
 		if (this.player) {//ipdate the player

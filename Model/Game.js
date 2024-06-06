@@ -93,6 +93,7 @@ export class Game {//Main game model
 			rec1.y + rec1.height > rec2.y
 		);
 	}
+	
 	// hitsPlayer() {//New method to check if the player was hit by a projectile
 	// 	EnemyProjectile.hitsPlayer(player);
 	// }

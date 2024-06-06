@@ -37,10 +37,13 @@ export class Player {
 				this.game.checkCollision(this,projectile) &&
 				!projectile.free &&
 				this.lives >= 1 && projectile.type === 'enemy'
+				
 			)
 			{
 				this.lives--;
+				projectile.free=true;
 				projectile.reset();
+				console.log('Player hit by enemy projectile');
 			}
 		});
 	}

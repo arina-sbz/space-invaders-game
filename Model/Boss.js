@@ -15,7 +15,7 @@ export class Boss {
 		this.height = 200;
 		this.x = this.game.width / 2 - this.width / 2;
 		this.y = -this.height;
-		this.speedX = (Math.random() < 0.5 ? -1 : 1) * 2;
+		this.speedX = (Math.random() < 0.5 ? -1 : 1) ;
 		this.speedY = 0;
 		this.lives = bossLives;
 		this.maxLives = this.lives;
@@ -24,22 +24,25 @@ export class Boss {
 		this.frameX = 0;
 		this.frameY = Math.floor(Math.random() * 4);
 		this.maxFrame = 11;
+		this.canfire = true;
+		this.projectilecounter = 0;
 	}
 
 	/**
 	 * Updates the boss's position and checks for collisions.
 	 */
 	fireProjectile() {
-        const enemyprojectile = new EnemyProjectile(this.x, this.y, 10, 5,10 );
+        const enemyprojectile = new EnemyProjectile(this.x, this.y, 10, 2,5 );
         this.game.projectilesPool.push(enemyprojectile);
 		console.log('Boss fired a projectile');
+		this.canfire = false;
     }
 
 	update() {
 		this.speedY = 0;
 
 		if (this.game.spriteUpdate && this.lives >= 1) this.frameX = 0;
-		if (this.y < 0) this.y += 8; // Increase from 4 to 8 to double the speed
+		if (this.y < 0) this.y += 4; // Increase from 4 to 8 to double the speed
 		if (
 			this.x < 0 ||
 			(this.x > this.game.width - this.width && this.lives >= 1)
@@ -50,7 +53,25 @@ export class Boss {
 		this.x += this.speedX;//movement of the boss
 		this.y += this.speedY;
 
-		this.fireProjectile();//Fire the projectile after movement
+		// if(this.canfire){
+		// 	this.fireProjectile();//Fire the projectile after movement		
+		// 	this.canfire = false;
+		// }
+		// if(!this.canfire){
+		// 		this.game.projectilesPool.forEach((projectile) => {
+		// 			if (
+		// 				projectile.type === 'enemy' && !projectile.iscounted
+		// 			)
+		// 			{
+		// 				projectile.iscounted = true;
+		// 				projectilecounter++;
+		// 			}
+		// 		});
+		// 	}
+
+		// if(this.projectilecounter<1){
+		// 	this.canfire = true;
+		// }
 
 		this.game.projectilesPool.forEach((projectile) => {//Boss life updater
 			if (
@@ -69,6 +90,19 @@ export class Boss {
 			this.lives = 0;
 		}
 
+		// if(this.lives <1){
+		// 	this.game.projectilesPool.forEach((projectile) => {
+		// 		if (
+		// 			projectile.type === 'enemy'					
+		// 		)
+		// 		{
+		// 			projectile.free=true;
+		// 			projectile.reset();
+		// 		}
+		// 	});
+			
+		// }
+
 		if (this.lives < 1 && this.game.spriteUpdate) {//Check if the boss is dead or at the end every frame
 			this.frameX++;
 			if (this.frameX > this.maxFrame) {
@@ -78,7 +112,6 @@ export class Boss {
 				if (!this.game.gameOver) this.game.newWave();
 			}
 		}
-
 		if (this.y + this.height > this.game.height) this.game.gameOver = true;
 	}
 

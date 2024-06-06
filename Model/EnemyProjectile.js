@@ -18,6 +18,7 @@ export class EnemyProjectile {
 		this.height = height;
 		this.type = 'enemy'; // Enemy projectile type
 		this.free = false;//This is to check if the projectile is free, i.e has already did not damage anything. Used to prevent double damage by single projectile
+		this.iscounted = false;
 	}
 
 	/**
